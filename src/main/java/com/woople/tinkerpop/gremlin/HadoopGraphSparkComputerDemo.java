@@ -12,11 +12,10 @@ import java.util.Map;
 
 public class HadoopGraphSparkComputerDemo {
     public static void main(String[] args) throws Exception {
-
         FileConfiguration configuration = new PropertiesConfiguration();
         configuration.load(new File(args[0]));
 
-        String[] resourceFiles = configuration.getStringArray("woople.resource.files");
+        String[] resourceFiles = configuration.getStringArray("hadoop.resource.files");
 
         final Configuration hadoopConfig = new Configuration(false);
 
@@ -24,11 +23,7 @@ public class HadoopGraphSparkComputerDemo {
             hadoopConfig.addResource(new File(path).toURI().toURL());
         }
 
-        //String graphProFile = configuration.getString("woople.graph.properties");
-
-        HadoopGraph graph = HadoopGraph.open(configuration);//"conf/hadoop-graphson.properties"
-
-        //System.setProperty("HADOOP_USER_NAME", "ocsp");
+        HadoopGraph graph = HadoopGraph.open(configuration);
 
         for (Map.Entry<String, String> p : hadoopConfig) {
             graph.configuration().addProperty(p.getKey(), p.getValue());
